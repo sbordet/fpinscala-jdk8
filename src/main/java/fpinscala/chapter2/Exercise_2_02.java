@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-public class Exercise2
+public class Exercise_2_02
 {
     public static <A> boolean isSorted(List<A> list, BiPredicate<A, A> greaterThan)
     {

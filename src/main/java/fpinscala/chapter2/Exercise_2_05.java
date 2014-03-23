@@ -2,7 +2,7 @@ package fpinscala.chapter2;
 
 import java.util.function.Function;
 
-public class Exercise5
+public class Exercise_2_05
 {
     public <A, B, R> Function<A, R> compose(Function<A, B> f1, Function<B, R> f2)
     {

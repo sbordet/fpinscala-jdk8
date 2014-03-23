@@ -1,6 +1,6 @@
 package fpinscala.chapter2;
 
-public class Exercise1
+public class Exercise_2_01
 {
     public static int fib(int n)
     {
