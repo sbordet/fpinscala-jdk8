@@ -15,10 +15,15 @@
  */
 package fpinscala.chapter3;
 
-public class Exercise_3_02
+public class Exercise_3_09
 {
-    public static <T> Cons<T> tail(Cons<T> list)
+    public static <A> int length(Cons<A> list)
     {
-        return list.isNil() ? list : list.tail;
+        return Exercise_3_07.foldRight(list, 0, (a, l) -> l + 1);
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(length(Cons.of(1, 2, 3, 4, 5)));
     }
 }

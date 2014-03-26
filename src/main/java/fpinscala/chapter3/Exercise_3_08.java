@@ -15,10 +15,11 @@
  */
 package fpinscala.chapter3;
 
-public class Exercise_3_02
+public class Exercise_3_08
 {
-    public static <T> Cons<T> tail(Cons<T> list)
+    public static void main(String[] args)
     {
-        return list.isNil() ? list : list.tail;
+        Cons<Integer> result = Exercise_3_07.foldRight(Cons.of(1, 2, 3), Cons.nil(), Cons::new);
+        System.out.println(result);
     }
 }

@@ -15,19 +15,26 @@
  */
 package fpinscala.chapter3;
 
-public class Exercise_3_06
+import java.util.function.BiFunction;
+
+public class Exercise_3_07
 {
-    public static <T> Cons<T> init(Cons<T> list)
+    // The way foldRight() works is to first "explode" the Cons recursively until the last element.
+    // Once the whole Cons is exploded , it first applies f to the last element.
+    // So with Cons.of(1, 2, 3, 4) and f being the product function, explodes into:
+    // 1*(2*(3*(4*value)))
+    // Even if the last element is 0, we have to unwind the stack anyway so we cannot short-circuit.
+    public static <T, R> R foldRight(Cons<T> list, R value, BiFunction<T, R, R> f)
     {
-        if (list.tail.isNil())
-            return Cons.nil();
+        if (list.isNil())
+            return value;
         // Non tail recursive.
-        return new Cons<>(list.head, init(list.tail));
+        return f.apply(list.head, foldRight(list.tail, value, f));
     }
 
     public static void main(String[] args)
     {
         Cons<Integer> list = Cons.of(1, 2, 4, 8, 16);
-        System.out.println(init(list));
+        System.out.println(foldRight(list, 0, Integer::sum));
     }
 }
