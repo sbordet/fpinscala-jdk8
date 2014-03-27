@@ -15,19 +15,28 @@
  */
 package fpinscala.chapter3;
 
-public class Exercise_3_06
+public class Exercise_3_11
 {
-    public static <T> Cons<T> init(Cons<T> list)
+    public static int sum(Cons<Integer> list)
     {
-        if (list.tail.isNil())
-            return Cons.nil();
-        // Non tail recursive.
-        return new Cons<>(list.head, init(list.tail));
+        return Exercise_3_10.foldLeft(list, 0, Integer::sum);
+    }
+
+    public static int product(Cons<Integer> list)
+    {
+        return Exercise_3_10.foldLeft(list, 1, (result, element) -> result * element);
+    }
+
+    public static <T> int length(Cons<T> list)
+    {
+        return Exercise_3_10.foldLeft(list, 0, (result, element) -> result + 1);
     }
 
     public static void main(String[] args)
     {
         Cons<Integer> list = Cons.of(1, 2, 4, 8, 16);
-        System.out.println(init(list));
+        System.out.println(sum(list));
+        System.out.println(product(list));
+        System.out.println(length(list));
     }
 }

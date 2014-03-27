@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fpinscala.chapter2;
+package fpinscala.chapter3;
 
-import java.util.function.Function;
-
-public class Exercise_2_05
+public class Exercise_3_12
 {
-    public <A, B, R> Function<A, R> compose(Function<A, B> f1, Function<B, R> f2)
+    public static <T> Cons<T> reverse(Cons<T> list)
     {
-        // Built-in JDK function.
-        Function<A, R> result1 = f2.compose(f1);
+        // See Exercise_3_08: if foldRight() was returning the same list, foldLeft() should reverse it.
+        // Cannot use Cons::new as last argument because the parameter order is inverted.
+        return Exercise_3_10.foldLeft(list, Cons.nil(), (t, h) -> new Cons<>(h, t));
+    }
 
-        // Explicit implementation.
-        Function<A, R> result2 = a -> f2.apply(f1.apply(a));
-
-        return result2;
+    public static void main(String[] args)
+    {
+        System.out.println(reverse(Cons.of(1, 2, 3, 4)));
     }
 }
