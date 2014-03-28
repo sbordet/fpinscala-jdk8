@@ -65,6 +65,32 @@ public class Cons<T>
     }
 
     @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Cons))
+            return false;
+        Cons that = (Cons)obj;
+        if (isNil())
+            return that.isNil();
+        if (that.isNil())
+            return false;
+        return head.equals(that.head) && tail.equals(that.tail);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return helpHashCode(this);
+    }
+
+    private int helpHashCode(Cons<T> list)
+    {
+        if (isNil())
+            return 0;
+        return list.head.hashCode() + 31 * helpHashCode(list.tail);
+    }
+
+    @Override
     public String toString()
     {
         return "[" + helpToString(this) + "]";
