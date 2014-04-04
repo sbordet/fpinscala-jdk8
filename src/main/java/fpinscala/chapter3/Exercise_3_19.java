@@ -21,7 +21,7 @@ public class Exercise_3_19
 {
     public static <A> Cons<A> filter(Cons<A> list, Predicate<A> f)
     {
-        return Exercise_3_07.foldRight(list, Cons.nil(), (element, result) -> f.test(element) ? new Cons<>(element, result) : result);
+        return Exercise_3_07.foldRight(list, Cons.empty(), (element, result) -> f.test(element) ? new Cons<>(element, result) : result);
     }
 
     public static void main(String[] args)

@@ -23,7 +23,7 @@ public class Exercise_3_20
     {
         // Applying f results in a Cons, to which we need to append the accumulated value.
         // Therefore it's easy to use the append() function from Exercise_3_14.
-        return Exercise_3_07.foldRight(list, Cons.nil(), (element, result) -> Exercise_3_14.append(f.apply(element), result));
+        return Exercise_3_07.foldRight(list, Cons.empty(), (element, result) -> Exercise_3_14.append(f.apply(element), result));
     }
 
     public static <A, B> Cons<B> flatMap2(Cons<A> list, Function<A, Cons<B>> f)

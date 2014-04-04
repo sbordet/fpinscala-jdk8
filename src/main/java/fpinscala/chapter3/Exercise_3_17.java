@@ -22,7 +22,7 @@ public class Exercise_3_17
         // We have seen that foldRight() can clone a list (Exercise_3_08).
         // We just need to tweak the accumulator function to convert the Double into a String.
 
-        return Exercise_3_07.foldRight(list, Cons.nil(), (element, result) -> new Cons<>(String.valueOf("S" + element), result));
+        return Exercise_3_07.foldRight(list, Cons.empty(), (element, result) -> new Cons<>(String.valueOf("S" + element), result));
     }
 
     public static void main(String[] args)

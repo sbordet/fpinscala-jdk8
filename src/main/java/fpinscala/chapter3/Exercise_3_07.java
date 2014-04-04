@@ -26,7 +26,7 @@ public class Exercise_3_07
     // Even if the last element is 0, we have to unwind the stack anyway so we cannot short-circuit.
     public static <T, R> R foldRight(Cons<T> list, R value, BiFunction<T, R, R> f)
     {
-        if (list.isNil())
+        if (list.isEmpty())
             return value;
         // Non tail recursive.
         return f.apply(list.head, foldRight(list.tail, value, f));

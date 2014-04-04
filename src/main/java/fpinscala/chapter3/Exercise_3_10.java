@@ -23,7 +23,7 @@ public class Exercise_3_10
 {
     public static <A, B> B foldLeft(Cons<A> list, B value, BiFunction<B, A, B> f)
     {
-        if (list.isNil())
+        if (list.isEmpty())
             return value;
         // Tail recursive
         return foldLeft(list.tail, f.apply(value, list.head), f);

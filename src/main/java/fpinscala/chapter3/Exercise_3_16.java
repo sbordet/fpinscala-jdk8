@@ -22,7 +22,7 @@ public class Exercise_3_16
         // We have seen that foldRight() can clone a list (Exercise_3_08).
         // We just need to tweak the accumulator function to add 1 to the element.
 
-        return Exercise_3_07.foldRight(list, Cons.nil(), (element, result) -> new Cons<>(element + 1, result));
+        return Exercise_3_07.foldRight(list, Cons.empty(), (element, result) -> new Cons<>(element + 1, result));
     }
 
     public static void main(String[] args)

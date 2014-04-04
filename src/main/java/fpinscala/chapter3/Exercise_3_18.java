@@ -21,7 +21,7 @@ public class Exercise_3_18
 {
     public static <A, B> Cons<B> map(Cons<A> list, Function<A, B> f)
     {
-        return Exercise_3_07.foldRight(list, Cons.nil(), (element, result) -> new Cons<>(f.apply(element), result));
+        return Exercise_3_07.foldRight(list, Cons.empty(), (element, result) -> new Cons<>(f.apply(element), result));
     }
 
     public static void main(String[] args)

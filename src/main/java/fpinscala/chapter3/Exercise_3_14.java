@@ -19,7 +19,7 @@ public class Exercise_3_14
 {
     public static <T> Cons<T> append(Cons<T> list1, Cons<T> list2)
     {
-        if (list1.isNil())
+        if (list1.isEmpty())
             return list2;
 
         // The fold operations take a Cons, a value and an accumulator function.

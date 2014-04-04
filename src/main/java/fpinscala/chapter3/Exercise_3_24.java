@@ -26,7 +26,7 @@ public class Exercise_3_24
 
     private static <A> boolean hasSubSequence(Cons<A> list1, Cons<A> list2, BiPredicate<Cons<A>, Cons<A>> startsWith)
     {
-        if (list1.isNil() || list2.isNil())
+        if (list1.isEmpty() || list2.isEmpty())
             return false;
         if (startsWith.test(list1, list2))
             return true;
@@ -36,9 +36,9 @@ public class Exercise_3_24
     private static <A> boolean startsWith(Cons<A> list1, Cons<A> list2)
     {
         // Canonical implementation based on the structure of Cons.
-        if (list2.isNil())
+        if (list2.isEmpty())
             return true;
-        if (list1.isNil())
+        if (list1.isEmpty())
             return false;
         if (!list1.head.equals(list2.head))
             return false;
@@ -58,7 +58,7 @@ public class Exercise_3_24
         // second element of both lists, etc.), while flatMap() will iterate over the first list
         // and for each element iterate over the second list, which is not the semantic we want.
 
-        Cons<Cons<A>> result = Exercise_3_23.zipWith(list1, list2, (a1, a2) -> a1.equals(a2) ? Cons.of(a2) : Cons.nil());
+        Cons<Cons<A>> result = Exercise_3_23.zipWith(list1, list2, (a1, a2) -> a1.equals(a2) ? Cons.of(a2) : Cons.empty());
         return Exercise_3_15.concat(result).equals(list2);
     }
 
@@ -71,7 +71,7 @@ public class Exercise_3_24
     private static <A> void perform(BiPredicate<Cons<Integer>, Cons<Integer>> startsWith)
     {
         Cons<Integer> list = Cons.of(1, 2, 3, 4);
-        if (hasSubSequence(list, Cons.nil(), startsWith))
+        if (hasSubSequence(list, Cons.empty(), startsWith))
             throw new Error();
         if (!hasSubSequence(list, Cons.of(1), startsWith))
             throw new Error();

@@ -24,8 +24,8 @@ public class Exercise_3_22
         // So we just need to rely on the structure of Cons, summing the heads and
         // then recurse on the tails.
 
-        if (list1.isNil() || list2.isNil())
-            return Cons.nil();
+        if (list1.isEmpty() || list2.isEmpty())
+            return Cons.empty();
         // Non tail recursive.
         return new Cons<>(list1.head + list2.head, addPairwise(list1.tail, list2.tail));
     }

@@ -25,7 +25,7 @@ public class Exercise_3_05
 {
     public static <T> Cons<T> dropWhile(Cons<T> list, Predicate<T> predicate)
     {
-        if (list.isNil())
+        if (list.isEmpty())
             return list;
 
         if (!predicate.test(list.head))

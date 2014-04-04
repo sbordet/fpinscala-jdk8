@@ -24,7 +24,7 @@ public class Exercise_3_15
         // which is Cons.nil(), and the operator "+" of Cons, which is append()
         // (see Exercise_3_14).
 
-        return Exercise_3_07.foldRight(lists, Cons.nil(), Exercise_3_14::append);
+        return Exercise_3_07.foldRight(lists, Cons.empty(), Exercise_3_14::append);
     }
 
     public static void main(String[] args)

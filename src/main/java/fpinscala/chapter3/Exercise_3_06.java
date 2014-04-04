@@ -19,8 +19,8 @@ public class Exercise_3_06
 {
     public static <T> Cons<T> init(Cons<T> list)
     {
-        if (list.tail.isNil())
-            return Cons.nil();
+        if (list.tail.isEmpty())
+            return Cons.empty();
         // Non tail recursive.
         return new Cons<>(list.head, init(list.tail));
     }

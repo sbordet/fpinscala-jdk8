@@ -21,8 +21,8 @@ public class Exercise_3_23
 {
     public static <A, B, C> Cons<C> zipWith(Cons<A> list1, Cons<B> list2, BiFunction<A, B, C> f)
     {
-        if (list1.isNil() || list2.isNil())
-            return Cons.nil();
+        if (list1.isEmpty() || list2.isEmpty())
+            return Cons.empty();
         // Non tail recursive.
         return new Cons<>(f.apply(list1.head, list2.head), zipWith(list1.tail, list2.tail, f));
     }

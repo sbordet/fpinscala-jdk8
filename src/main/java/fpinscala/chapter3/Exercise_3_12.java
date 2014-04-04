@@ -21,7 +21,7 @@ public class Exercise_3_12
     {
         // See Exercise_3_08: if foldRight() was returning the same list, foldLeft() should reverse it.
         // Cannot use Cons::new as last argument because the parameter order is inverted.
-        return Exercise_3_10.foldLeft(list, Cons.nil(), (t, h) -> new Cons<>(h, t));
+        return Exercise_3_10.foldLeft(list, Cons.empty(), (t, h) -> new Cons<>(h, t));
     }
 
     public static void main(String[] args)

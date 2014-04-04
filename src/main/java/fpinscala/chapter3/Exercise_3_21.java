@@ -23,7 +23,7 @@ public class Exercise_3_21
     {
         // The function passed to flatMap() converts an element into a Cons.
         // We can return Cons.nil() when the predicate fails.
-        return Exercise_3_20.flatMap(list, e -> f.test(e) ? Cons.of(e) : Cons.nil());
+        return Exercise_3_20.flatMap(list, e -> f.test(e) ? Cons.of(e) : Cons.empty());
     }
 
     public static void main(String[] args)

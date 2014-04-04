@@ -16,15 +16,16 @@
 package fpinscala.chapter3;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Cons<T>
 {
-    private static Cons<?> NIL = new Cons<>();
+    private static Cons<?> EMPTY = new Cons<>();
 
-    public static <S> Cons<S> nil()
+    public static <S> Cons<S> empty()
     {
         @SuppressWarnings("unchecked")
-        Cons<S> result = (Cons<S>)NIL;
+        Cons<S> result = (Cons<S>)EMPTY;
         return result;
     }
 
@@ -38,14 +39,14 @@ public class Cons<T>
     private static <T> Cons<T> helpOf(int offset, T... elements)
     {
         if (offset == elements.length)
-            return nil();
+            return empty();
         return new Cons<>(elements[offset], helpOf(offset + 1, elements));
     }
 
     public final T head;
     public final Cons<T> tail;
 
-    // Only used by NIL.
+    // Only used by EMPTY.
     private Cons()
     {
         head = null;
@@ -59,9 +60,9 @@ public class Cons<T>
         this.tail = Objects.requireNonNull(tail);
     }
 
-    public boolean isNil()
+    public boolean isEmpty()
     {
-        return this == NIL;
+        return this == EMPTY;
     }
 
     @Override
@@ -70,9 +71,9 @@ public class Cons<T>
         if (!(obj instanceof Cons))
             return false;
         Cons that = (Cons)obj;
-        if (isNil())
-            return that.isNil();
-        if (that.isNil())
+        if (isEmpty())
+            return that.isEmpty();
+        if (that.isEmpty())
             return false;
         return head.equals(that.head) && tail.equals(that.tail);
     }
@@ -85,8 +86,9 @@ public class Cons<T>
 
     private int helpHashCode(Cons<T> list)
     {
-        if (isNil())
+        if (isEmpty())
             return 0;
+        // Non tail recursive.
         return list.head.hashCode() + 31 * helpHashCode(list.tail);
     }
 
@@ -98,13 +100,18 @@ public class Cons<T>
 
     private String helpToString(Cons<T> list)
     {
-        if (list.isNil())
+        if (list.isEmpty())
             return "";
 
-        if (list.tail.isNil())
+        if (list.tail.isEmpty())
             return String.valueOf(list.head);
 
         // Non tail recursive.
         return String.valueOf(list.head) + "," + helpToString(list.tail);
+    }
+
+    public <S> Cons<S> map(Function<T, S> f)
+    {
+        return Exercise_3_18.map(this, f);
     }
 }

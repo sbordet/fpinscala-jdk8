@@ -19,6 +19,6 @@ public class Exercise_3_02
 {
     public static <T> Cons<T> tail(Cons<T> list)
     {
-        return list.isNil() ? list : list.tail;
+        return list.isEmpty() ? list : list.tail;
     }
 }
