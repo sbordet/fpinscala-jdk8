@@ -16,6 +16,7 @@
 package fpinscala.chapter4;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -30,7 +31,7 @@ public class Option<A>
         return result;
     }
 
-    public static <S> Option<S> unit(S value)
+    public static <S> Option<S> of(S value)
     {
         // Static method because it must not depend on type parameter T.
 
@@ -65,7 +66,12 @@ public class Option<A>
 
     public <B> Option<B> map(Function<A, B> f)
     {
-        return flatMap(a -> unit(f.apply(value)));
+        return flatMap(a -> of(f.apply(value)));
+    }
+
+    public <B, C> Option<C> map2(Option<B> that, BiFunction<A, B, C> f)
+    {
+        return Exercise_4_03.map2(this, that, f);
     }
 
     public A getOrElse(A alternative)
@@ -95,15 +101,15 @@ public class Option<A>
         // How do we get the Option<Option<A>> ?
         // A naive attempt would be:
         //
-        // return unit(this).getOrElse(alternative);
+        // return of(this).getOrElse(alternative);
         //
-        // But this won't work because unit(this) does not return the correct value if
+        // But this won't work because of(this) does not return the correct value if
         // "this" is empty(): it would "wrap" Option.empty() into an Option, which would
         // then *not* be empty because Option.empty() is not null.
         //
         // What we need to do is to "lift" the interval value from A to Option<A>:
 
-        return map(Option::unit).getOrElse(alternative);
+        return map(Option::of).getOrElse(alternative);
     }
 
     public Option<A> filter(Predicate<A> p)
@@ -114,6 +120,6 @@ public class Option<A>
     @Override
     public String toString()
     {
-        return String.format("[%s]", isEmpty() ? "" : value);
+        return String.format("<%s>", isEmpty() ? "" : value);
     }
 }

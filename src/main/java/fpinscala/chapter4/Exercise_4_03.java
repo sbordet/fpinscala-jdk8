@@ -27,6 +27,6 @@ public class Exercise_4_03
 
     public static void main(String[] args)
     {
-        System.out.println(map2(Option.unit(Arrays.asList("foo", "bar")), Option.unit("string"), (c, s) -> c.size() + s.length()));
+        System.out.println(map2(Option.of(Arrays.asList("foo", "bar")), Option.of("string"), (c, s) -> c.size() + s.length()));
     }
 }

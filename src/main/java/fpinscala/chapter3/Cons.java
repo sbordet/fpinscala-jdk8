@@ -16,6 +16,7 @@
 package fpinscala.chapter3;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Cons<T>
@@ -113,5 +114,15 @@ public class Cons<T>
     public <S> Cons<S> map(Function<T, S> f)
     {
         return Exercise_3_18.map(this, f);
+    }
+
+    public <R> R foldRight(R value, BiFunction<T, R, R> f)
+    {
+        return Exercise_3_07.foldRight(this, value, f);
+    }
+
+    public <R> R foldLeft(R value, BiFunction<R, T, R> f)
+    {
+        return Exercise_3_10.foldLeft(this, value, f);
     }
 }

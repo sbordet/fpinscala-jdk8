@@ -28,7 +28,7 @@ public class Exercise_4_02
     {
         if (list.isEmpty())
             return Option.empty();
-        return Option.unit(sum(list) / length(list));
+        return Option.of(sum(list) / length(list));
     }
 
     private static double sum(Cons<Double> list)
