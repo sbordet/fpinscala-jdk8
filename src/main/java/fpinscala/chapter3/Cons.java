@@ -54,6 +54,11 @@ public class Cons<T>
         tail = null;
     }
 
+    public Cons(Cons<T> tail, T head)
+    {
+        this(head, tail);
+    }
+
     // Values cannot be null.
     public Cons(T head, Cons<T> tail)
     {
