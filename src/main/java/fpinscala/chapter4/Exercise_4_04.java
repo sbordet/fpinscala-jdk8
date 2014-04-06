@@ -15,6 +15,11 @@
  */
 package fpinscala.chapter4;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+
 import fpinscala.chapter3.Cons;
 
 public class Exercise_4_04
@@ -58,6 +63,15 @@ public class Exercise_4_04
 
 //        return list.foldRight(Option.of(Cons.empty()), (element, accumulated) -> element.flatMap(h -> accumulated.map(t -> new Cons<>(h, t))));
         return list.foldRight(Option.of(Cons.empty()), (element, accumulated) -> element.map2(accumulated, Cons::new));
+    }
+
+    public static <A> Option<List<A>> sequence(List<Option<A>> list)
+    {
+        // In the JDK version, Stream.reduce() is equivalent to foldLeft().
+        // The last argument is not used in sequential streams, but it's nonetheless mandatory.
+        BiFunction<A, List<A>, List<A>> add = (e, c) -> { c.add(e); return c; };
+        BinaryOperator<List<A>> addAll = (c1, c2) -> { c1.addAll(c2); return c1; };
+        return list.stream().reduce(Option.of(new ArrayList<>()), (collection, element) -> element.map2(collection, add), (r1, r2) -> r1.map2(r2, addAll));
     }
 
     public static void main(String[] args)
