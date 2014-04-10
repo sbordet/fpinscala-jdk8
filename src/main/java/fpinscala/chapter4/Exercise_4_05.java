@@ -48,7 +48,7 @@ public class Exercise_4_05
 
     public static <A> Option<Cons<A>> sequence(Cons<Option<A>> list)
     {
-        // Reimplementation of sequence() in terms of traverse.
+        // Reimplementation of sequence() in terms of traverse().
         return traverse(list, a -> a);
     }
 
