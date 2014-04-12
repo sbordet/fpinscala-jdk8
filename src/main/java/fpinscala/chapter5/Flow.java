@@ -1,0 +1,65 @@
+/*
+ * Copyright (c) 2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package fpinscala.chapter5;
+
+import java.util.function.Supplier;
+
+public class Flow<T>
+{
+    private static Flow<?> EMPTY = new Flow<>();
+
+    public static <S> Flow<S> empty()
+    {
+        @SuppressWarnings("unchecked")
+        Flow<S> result = (Flow<S>)EMPTY;
+        return result;
+    }
+
+    @SafeVarargs
+    public static <S> Flow<S> of(S... elements)
+    {
+        return helpOf(0, elements);
+    }
+
+    @SafeVarargs
+    private static <S> Flow<S> helpOf(int offset, S... elements)
+    {
+        if (offset == elements.length)
+            return empty();
+        return new Flow<>(() -> elements[offset], () -> helpOf(offset + 1, elements));
+    }
+
+
+    public final Supplier<T> head;
+    public final Supplier<Flow<T>> tail;
+
+    private Flow()
+    {
+        this.head = null;
+        this.tail = null;
+    }
+
+    public Flow(Supplier<T> head, Supplier<Flow<T>> tail)
+    {
+        this.head = head;
+        this.tail = tail;
+    }
+
+    public boolean isEmpty()
+    {
+        return this == EMPTY;
+    }
+}
