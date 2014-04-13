@@ -17,6 +17,8 @@ package fpinscala.chapter5;
 
 import java.util.function.Supplier;
 
+import fpinscala.chapter3.Cons;
+
 public class Flow<T>
 {
     private static Flow<?> EMPTY = new Flow<>();
@@ -42,7 +44,6 @@ public class Flow<T>
         return new Flow<>(() -> elements[offset], () -> helpOf(offset + 1, elements));
     }
 
-
     public final Supplier<T> head;
     public final Supplier<Flow<T>> tail;
 
@@ -61,5 +62,10 @@ public class Flow<T>
     public boolean isEmpty()
     {
         return this == EMPTY;
+    }
+
+    public Cons<T> toCons()
+    {
+        return Exercise_5_01.toCons(this);
     }
 }
