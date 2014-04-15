@@ -15,6 +15,7 @@
  */
 package fpinscala.chapter5;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import fpinscala.chapter3.Cons;
@@ -62,6 +63,18 @@ public class Flow<T>
     public boolean isEmpty()
     {
         return this == EMPTY;
+    }
+
+    public <S> S foldRight(S value, BiFunction<T, Supplier<S>, Supplier<S>> f)
+    {
+        if (isEmpty())
+            return value;
+        // The result of f.apply() is always "realized" by calling get().
+        // In order to proceed with the iteration, the user-supplied function f
+        // must either explicitly call get() on the second argument (which "realizes"
+        // the tail) or the return value of f must depend on the second argument so
+        // that "realizing" the return value will also "realize" the second argument.
+        return f.apply(head.get(), () -> tail.get().foldRight(value, f)).get();
     }
 
     public Cons<T> toCons()

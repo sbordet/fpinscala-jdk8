@@ -23,10 +23,10 @@ public class Exercise_5_02
         // recursively call itself changing the value of n at each recursion,
         // accumulating into a new Flow (it is evident that this is a fold right).
         //
-        // The problem lies in the fact that take() takes a Flow, while the
+        // The problem lies in the fact that take() takes a Flow<T>, while the
         // Flow constructor takes a Supplier<Flow<T>>.
-        // Differently from Scala, we have to create the Supplier<Flow<T>> on
-        // the fly to avoid the invocation of get() to "realize" the tail.
+        // In Java we have to create the Supplier<Flow<T>> explicitly
+        // to avoid the invocation of get() to "realize" the tail.
         //
         // As result, this method is not really recursive when called because
         // it just builds the first element of the flow.
@@ -40,11 +40,27 @@ public class Exercise_5_02
         return new Flow<>(flow.head, () -> take(flow.tail.get(), n - 1));
     }
 
+    public static <S> Flow<S> drop(Flow<S> flow, int n)
+    {
+        if (flow.isEmpty())
+            return flow;
+        if (n == 0)
+            return flow;
+        return drop(flow.tail.get(), n - 1);
+    }
+
     public static void main(String[] args)
     {
         Flow<Integer> flow = Flow.of(1, 2, 3, 4);
+
+        System.out.println(take(Flow.empty(), 2).toCons());
         System.out.println(take(flow, 0).toCons());
         System.out.println(take(flow, 2).toCons());
         System.out.println(take(flow, 5).toCons());
+        System.out.println();
+        System.out.println(drop(Flow.empty(), 2).toCons());
+        System.out.println(drop(flow, 0).toCons());
+        System.out.println(drop(flow, 2).toCons());
+        System.out.println(drop(flow, 5).toCons());
     }
 }
