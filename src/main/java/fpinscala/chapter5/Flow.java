@@ -15,6 +15,7 @@
  */
 package fpinscala.chapter5;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -56,8 +57,8 @@ public class Flow<T>
 
     public Flow(Supplier<T> head, Supplier<Flow<T>> tail)
     {
-        this.head = head;
-        this.tail = tail;
+        this.head = Objects.requireNonNull(head);
+        this.tail = Objects.requireNonNull(tail);
     }
 
     public boolean isEmpty()
