@@ -28,7 +28,7 @@ public class Exercise_5_04
         //
         // In exists(), the predicate will fail until the element is found, therefore each time the
         // predicate fails, the iteration will continue.
-        return flow.foldRight(false, (element, lazyResult) -> p.test(element) ? () -> true : lazyResult);
+        return flow.foldRight(() -> false, (element, lazyResult) -> p.test(element) ? () -> true : lazyResult);
 
         // Another way of writing it, more similar to the Scala version.
         // Note how in this version the "realization" of the second argument is explicit.
@@ -39,7 +39,7 @@ public class Exercise_5_04
     {
         // Like above, we need to "realize" the second argument to iterate.
         // When the predicate fails, iteration is stopped.
-        return flow.foldRight(true, (element, lazyResult) -> p.test(element) ? lazyResult : () -> false);
+        return flow.foldRight(() -> true, (element, lazyResult) -> p.test(element) ? lazyResult : () -> false);
     }
 
     public static void main(String[] args)

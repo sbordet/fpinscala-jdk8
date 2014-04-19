@@ -66,10 +66,10 @@ public class Flow<T>
         return this == EMPTY;
     }
 
-    public <S> S foldRight(S value, BiFunction<T, Supplier<S>, Supplier<S>> f)
+    public <S> S foldRight(Supplier<S> value, BiFunction<T, Supplier<S>, Supplier<S>> f)
     {
         if (isEmpty())
-            return value;
+            return value.get();
         // The result of f.apply() is always "realized" by calling get().
         // In order to proceed with the iteration, the user-supplied function f
         // must either explicitly call get() on the second argument (which "realizes"

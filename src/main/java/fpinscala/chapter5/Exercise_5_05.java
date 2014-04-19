@@ -26,7 +26,7 @@ public class Exercise_5_05
         // predicate is true, or return an empty Flow when it's false.
         // Note how we never "realize" lazyResult, so the iteration does not happen when invoking
         // takeWhile() - we only "iterate" on the first element, but only when calling toCons().
-        return flow.foldRight(Flow.empty(), (element, lazyResult) -> () -> p.test(element) ? new Flow<>(() -> element, lazyResult) : Flow.empty());
+        return flow.foldRight(() -> Flow.empty(), (element, lazyResult) -> () -> p.test(element) ? new Flow<>(() -> element, lazyResult) : Flow.empty());
 
         // Another way of writing it.
 //        return flow.foldRight(Flow.empty(), (element, lazyResult) -> p.test(element) ? () -> new Flow<>(() -> element, lazyResult) : Flow::empty);

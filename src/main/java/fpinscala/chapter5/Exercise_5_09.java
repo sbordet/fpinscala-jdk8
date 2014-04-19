@@ -15,19 +15,16 @@
  */
 package fpinscala.chapter5;
 
-import fpinscala.chapter4.Option;
-
-public class Exercise_5_06
+public class Exercise_5_09
 {
-    public static <S> Option<S> headOption(Flow<S> flow)
+    public static Flow<Integer> from(int n)
     {
-        return flow.foldRight(Option::empty, (element, lazyResult) -> () -> Option.of(element));
+        return new Flow<>(() -> n, () -> from(n + 1));
     }
 
     public static void main(String[] args)
     {
-        Flow<Integer> flow = Flow.of(1, 2, 3, 4);
-        System.out.println(headOption(flow));
-        System.out.println(headOption(Flow.empty()));
+        Flow<Integer> flow = from(42);
+        System.out.println(Exercise_5_02.take(flow, 5).toCons());
     }
 }
