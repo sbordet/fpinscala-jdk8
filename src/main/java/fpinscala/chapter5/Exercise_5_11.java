@@ -38,18 +38,6 @@ public class Exercise_5_11
         return new Flow<>(() -> pair.x, () -> unfold(pair.y, f));
     }
 
-    public static class Pair<X, Y>
-    {
-        public final X x;
-        public final Y y;
-
-        public Pair(X x, Y y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
     public static void main(String[] args)
     {
         Flow<Integer> naturals = unfold(0, i -> Option.of(new Pair<>(i, i + 1)));
