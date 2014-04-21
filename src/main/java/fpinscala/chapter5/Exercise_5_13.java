@@ -15,6 +15,7 @@
  */
 package fpinscala.chapter5;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -47,10 +48,33 @@ public class Exercise_5_13
                 !s.isEmpty() && p.test(s.head.get()) ? Option.of(new Pair<>(s.head.get(), s.tail.get())) : Option.empty());
     }
 
+    public static <A, B, C> Flow<C> zipWith(Flow<A> flow1, Flow<B> flow2, BiFunction<A, B, C> f)
+    {
+        return Exercise_5_11.unfold(new Pair<>(flow1, flow2), s ->
+                s.x.isEmpty() || s.y.isEmpty() ? Option.empty() :
+                        Option.of(new Pair<>(f.apply(s.x.head.get(), s.y.head.get()), new Pair<>(s.x.tail.get(), s.y.tail.get()))));
+    }
+
+    public static <A, B, C> Flow<C> zipAllWith(Flow<A> flow1, Flow<B> flow2, BiFunction<Option<A>, Option<B>, C> f)
+    {
+        return Exercise_5_11.unfold(new Pair<>(flow1, flow2), s ->
+        {
+            if (s.x.isEmpty() && s.y.isEmpty())
+                return Option.empty();
+            if (s.x.isEmpty())
+                return Option.of(new Pair<>(f.apply(Option.empty(), Option.of(s.y.head.get())), new Pair<>(Flow.empty(), s.y.tail.get())));
+            if (s.y.isEmpty())
+                return Option.of(new Pair<>(f.apply(Option.of(s.x.head.get()), Option.empty()), new Pair<>(s.x.tail.get(), Flow.empty())));
+            return Option.of(new Pair<>(f.apply(Option.of(s.x.head.get()), Option.of(s.y.head.get())), new Pair<>(s.x.tail.get(), s.y.tail.get())));
+        });
+    }
+
     public static void main(String[] args)
     {
         System.out.println(map(Flow.of(1, 2, 3, 4), i -> i * 2).toCons());
         System.out.println(take(Flow.of(1, 2, 3, 4, 5), 3).toCons());
         System.out.println(takeWhile(Flow.of(1, 2, 3, 4, 5), i -> i < 3).toCons());
+        System.out.println(zipWith(Flow.of("1", "2", "3"), Flow.of("A", "B", "C", "D"), (a, b) -> a + b).toCons());
+        System.out.println(zipAllWith(Flow.of("1", "2", "3"), Flow.of("A", "B", "C", "D"), (a, b) -> a.getOrElse("-") + b.getOrElse("-")).toCons());
     }
 }
